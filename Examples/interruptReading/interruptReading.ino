@@ -1,13 +1,13 @@
 /* interruptReading.ino
- * 
+ *
  * Created by Danilo Queiroz Barbosa, August 26, 2016.
  * Member of electronicdrops.com
- * 
+ *
  * This example shows how to use the RFIDRdm630 library.
  * using interrrupt to check if a card was read.
- * 
- * 
- * 
+ *
+ *
+ *
  *   This example code is in the public domain.
 
  */
@@ -26,7 +26,7 @@ const int rxPin = 6;  // pin that will receive the data
 const int txPin = 7;  // connection not necessary.
 
 
-RFIDtag * tag;  // a pointer to an RFIDtag object
+RFIDtag  tag;  // a RFIDtag object
 
 RFIDRdm630 reader = RFIDRdm630(rxPin,txPin);    // the reader object.
 
@@ -39,7 +39,7 @@ void setup() {
   Serial.begin(9600);   // open the Serial for show data
 
   attachInterrupt(irqPin,rfidAvailable,FALLING);
-  
+
 }
 
 void loop() {
@@ -51,26 +51,24 @@ void loop() {
 
 
   delay(2000);
-  
+
 }
 
 
 
 void rfidAvailable(void)
 {
-  
+
   if (reader.isAvailable()){  // tests if a card was read by the module
 
     tag = reader.getTag();  // if true, then receives a pointer to an tag object
-   
 
-    if( strcmp(tag->getTag(),validTAG) == 0){
+
+    if( strcmp(tag.getTag(),validTAG) == 0){
       access = true;
     }else{
       access = false;
     }
-    
+
   }
 }
-
-

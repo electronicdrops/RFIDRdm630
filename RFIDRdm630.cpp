@@ -42,16 +42,16 @@ RFIDRdm630::RFIDRdm630(int rxPin, int txPin) {
     _rfidSerial = new SoftwareSerial(rxPin, txPin);
     _rfidSerial->begin(9600);
     _isAvailable = false;
-    _RFIDtag = new RFIDtag();
+    //_RFIDtag = new RFIDtag();
 }
 
 boolean RFIDRdm630::isAvailable() {
 
     int bytesRead;
     char buff[_tagLength + 1];
-    
+
     _isAvailable = false;
-    
+
     if (_rfidSerial->available() >= _totalLength) {
         if (_rfidSerial->read() == _startTag) {
             bytesRead = 0;
@@ -66,9 +66,9 @@ boolean RFIDRdm630::isAvailable() {
 
             if (_rfidSerial->read() == _endTag) {
                 buff[bytesRead] = 0;
-                
+
                 _isAvailable  = true;
-               _RFIDtag->setTag(buff);
+               _RFIDtag.setTag(buff);
             }
         }
     }
@@ -78,7 +78,7 @@ boolean RFIDRdm630::isAvailable() {
 
 
 
-RFIDtag * RFIDRdm630::getTag() {
+RFIDtag  RFIDRdm630::getTag() {
 
     return _RFIDtag;
 }
@@ -86,7 +86,7 @@ RFIDtag * RFIDRdm630::getTag() {
 
 
 /*
- * Classe RFIDtag 
+ * Classe RFIDtag
  *
  */
 
@@ -100,9 +100,9 @@ RFIDtag::RFIDtag(){
 
 
 char * RFIDtag::getTag(){
-  
+
   return _isValid? _tag:NULL;
-  
+
 }
 boolean RFIDtag::validateTag(){
 
@@ -116,17 +116,17 @@ char hexValue = '\0';
 
  for (int i = 0; i < _tagLength-2; i+=2){
    strncpy(piece,_tag+i,2);
-   hexValue ^= stringToByte(piece);   
-   
+   hexValue ^= stringToByte(piece);
+
    if ( i > 0 and  i < (_tagLength-2)){
     _cardNumber = _cardNumber << 8;
-    _cardNumber += stringToByte(piece); 
-    
+    _cardNumber += stringToByte(piece);
+
    }
  }
 
  return _isValid = (checksumValue == hexValue);
- 
+
 
 }
 
@@ -151,7 +151,5 @@ boolean RFIDtag::setTag(char tag[]){
 long RFIDtag::getCardNumber(){
 
   return _isValid? _cardNumber:NULL;
-  
-}
 
- 
+}

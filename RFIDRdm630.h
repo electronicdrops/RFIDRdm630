@@ -87,10 +87,10 @@ class RFIDtag{
     long getCardNumber();
     boolean setTag(char tag[]);
 
-  
+
 };
 
-  
+
 
 /*
 * This class represents the reader module
@@ -100,18 +100,18 @@ class RFIDtag{
 */
 
 class RFIDRdm630{
-    
+
 private:
     SoftwareSerial * _rfidSerial;
     boolean _isAvailable;
-  
-    RFIDtag * _RFIDtag;
-    
+
+    RFIDtag  _RFIDtag;
+
 public:
     RFIDRdm630(int rxPin, int txPin);
     boolean isAvailable();
-    RFIDtag * getTag();   
-    
+    RFIDtag  getTag();
+
 };
 
 
