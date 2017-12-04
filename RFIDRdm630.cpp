@@ -83,6 +83,11 @@ RFIDtag  RFIDRdm630::getTag() {
     return _RFIDtag;
 }
 
+void  RFIDRdm630::listen() {
+
+    _rfidSerial->listen();
+}
+
 
 
 /*

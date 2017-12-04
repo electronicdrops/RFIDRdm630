@@ -111,6 +111,7 @@ public:
     RFIDRdm630(int rxPin, int txPin);
     boolean isAvailable();
     RFIDtag  getTag();
+    void listen();
 
 };
 
